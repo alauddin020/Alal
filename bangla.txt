@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>    
+<head>
+<meta http-equiv="Content-Type" content="text/html;"/>
+  <meta charset="UTF-8">
+    <title>Title</title>
+    <style> 
+    @font-face {
+    font-family: "kalpurush";
+    font-style: normal;
+    font-weight: normal;
+    src: url(kalpurush.ttf) format('truetype');
+}
+* {
+    font-family: "kalpurush";
+}
+
+</style>
+</head>
+<body>
+<table class="table table-responsive" id="questions-table">
+    <thead>
+        <th>#</th>
+        <th>Subject</th>
+        <th>Difficulty</th>
+        <th>Question</th>
+        <th>Marks</th>
+        <th>Status</th>        
+    </thead>
+    <tbody>
+
+    @foreach($questions as $question)
+        <tr>
+        <td>{{Form::checkbox('id', $question->id)}}</td>
+            <td>{!! $question->subject->name !!}</td>
+            <td>
+            @if($question->difficulty == '1')Easy
+            @elseif($question->difficulty == '2')Medium
+            @elseif($question->difficulty == '3')Hard
+            @endif
+            </td>
+            <td>{!! $question->question !!}</td>
+            <td>{!! $question->marks !!}</td>
+            <td>{!! $question->status !!}</td>            
+        </tr>
+    @endforeach
+    
+    </tbody>
+</table>
+</body>
+
+
+$question = \App\question::get();
+view()->share('questions',$question);
+$pdf = PDF::loadView('pdf.question');   
+return $pdf->download('abc.pdf');
+//return view('pdf.question')->with('questions',$question);
+})->name('test');
+
+Route::any('/test2', function(Request $request){
+$pdf = PDF::loadView('pdf.question');   
+return $pdf->download('htmltopdfview');
+</html>
