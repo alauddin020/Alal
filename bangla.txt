@@ -61,3 +61,4 @@ Route::any('/test2', function(Request $request){
 $pdf = PDF::loadView('pdf.question');   
 return $pdf->download('htmltopdfview');
 </html>
+<?php #alauddin?>
